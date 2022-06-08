@@ -1,15 +1,32 @@
+import React, {useState, useEffect}  from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView, Image } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import {
+  useFonts, SpaceGrotesk_600SemiBold, SpaceGrotesk_400Regular,} from '@expo-google-fonts/space-grotesk';
+
+  export function AppFont(){
+    let [fontsLoaded] = useFonts({
+      SpaceGrotesk_400Regular, 
+      SpaceGrotesk_600SemiBold,
+      });
+
+    if (!fontsLoaded) {
+      return <AppLoading />;
+    }else{
+      
+    }
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View style={estilo.container}>
       <StatusBar style="auto" />
-      <Text>Rede Social - Encontros no Senac</Text>
-      <Text>Você tem um projeto integrador?</Text>
-      <Text>Quer envolver novas áreas?</Text>
-      <ScrollView>
-      <Text>Então, vamos encontrar os alunos aqui!</Text>    
+      <Text style={estilo.titulo1}>Rede Social - Encontros no Senac</Text>
+      <Text style={estilo.titulo2}>Você tem um projeto integrador?</Text>
+      <Text style={estilo.titulo2}>Quer envolver novas áreas?</Text>
+      <Text style={estilo.titulo2}>Então, vamos encontrar os alunos aqui!</Text>  
+      <ScrollView>  
       <FlatList
       data={pessoas}
       renderItem={({item})=>
@@ -17,6 +34,8 @@ export default function App() {
         <Text>{item.nome}</Text>
         <Text>{item.curso}</Text>
         <Text>{item.periodo}</Text>
+        <Text>{item.bio}</Text>
+        <Image style={estilo.img} source={item.img}/>
       </View>
       }
       />
@@ -25,12 +44,32 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
+const estilo = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#9933ff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  pessoas:{
+    alignSelf:'center'
+  },
+
+  img: {
+  width: 200,
+  height: 200,
+  borderRadius: 150,
+  alignSelf:'center'
+  },
+  titulo1:{
+    marginTop: 40,
+    marginVertical: 20,
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  titulo2:{
+    marginVertical: 10,
+    fontSize: 18
   },
 });
 
@@ -43,7 +82,7 @@ const pessoas = [
     turma: 'EB10',
     gosto: 'Bolo, Chantilly e Fuzil',
     bio: 'Presidente do Brasil, apaixonado por confeitaria. Adoro uma mulher que saiba fazer um bolinho do bom e um mousse cremoso! Geralmente me chamam de diabo, corrupto, maníaco e genocida. Mas eu acho que são apelidos carinhosos do meu povo :)',
-    img: './assets/bosonaro.png',
+    img: require('./assets/bosonaro.png'),
   },
   {
     uid:850,
@@ -53,7 +92,7 @@ const pessoas = [
     turma:'TI10m',
     gosto:'Php, Css, Design Gráfico, Games',
     bio:'Gosto de Jogar, gosto de mexer na internet, sou professor de informática, e gosto de tocar instrumentos como teclado, violão, guitarra e bateria',
-    img: '.c/assets/shrek.png',
+    img: require('./assets/shrek.png'),
   },
   {
     uid:420,
@@ -61,9 +100,9 @@ const pessoas = [
     curso:'Tecnico de informatica',
     periodo:'Manhã',
     turma:'TI10m',
-    gosto:'Hardware,Banco de dados,C#',
+    gosto:'Hardware,Banco de dados, C#',
     bio:'garoto de programa junior',
-    img:'.c/assets/caio.jpg',
+    img: require('./assets/caio.png'),
   },
   {
     uid:420,
@@ -73,7 +112,7 @@ const pessoas = [
     turma:'TI10m',
     gosto:'Hardware, Redes',
     bio:'mais novo membro da conferencia mundial de pods no banheiro ',
-    img:'.c/assets/bruno.jpg',
+    img: require('./assets/bruno.jpg'),
   },
   {
     uid:161,
@@ -82,7 +121,7 @@ const pessoas = [
     periodo: 'Manhã',
     gosto:'Apresentador,Administração',
     bio:'Curto a vida de um geito bem leve, gosto de sair com a minha familia aos finais de semana, sou comunicador e gosto de ser apresentador de TV esse é o meu forte',
-    img:'.c/assets/silvio.png',
+    img: require('./assets/silvio.png'),
   },
   {
     uid:159,
@@ -92,6 +131,6 @@ const pessoas = [
     turma: 'Ti10',
     gosto:'Livia, hosana, laura, Mol e casadas', 
     bio:'Hardware,,REDES,fazendo programa nois é só o basico, preto lindo, famoso e rico',
-    img:'./assets/123.jpg'
+    img: require('./assets/123.jpg'),
   }
 ];
